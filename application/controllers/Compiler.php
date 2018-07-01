@@ -8,7 +8,7 @@ class Compiler extends CI_Controller{
 	function index(){
 		$this->load->view('compiler');
 	}
-	function compile(){
+	function execute(){
 		putenv("PATH=C:\Program Files\Java\jdk1.8.0_111\bin");
 		$CC="javac";
 		$out="java Main";
@@ -43,7 +43,6 @@ class Compiler extends CI_Controller{
 				$out=$out." < ".$filename_in;
 				$output=shell_exec($out);
 			}
-			echo $output;
 		} else if(!strpos($error,"error")) {
 			echo "<pre>$error</pre>";
 			if(!$this->input->post('input')) {
@@ -52,13 +51,13 @@ class Compiler extends CI_Controller{
 				$out=$out." < ".$filename_in;
 				$output=shell_exec($out);
 			}
-			echo $output;
 		} else {
-			echo "<pre>$error</pre>";
+			$output = "<pre>$error</pre>";
 		}
 		exec("del $filename_code");
 		exec("del *.txt");
 		exec("del $executable");
+		echo $output;
 	}
 }
 ?>

@@ -5,8 +5,12 @@
   <title>Java Online Compiler</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap-4.0.0-beta.1.css" type="text/css"> 
-  </head>
+  <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap-4.0.0-beta.1.css" type="text/css">
+  <script src="<?php echo base_url() ?>assets/jquery-3.2.1.slim.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/popper.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/bootstrap.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/modernizr-2.8.3.min.js"></script> 
+</head>
 <body>
   <nav class="navbar navbar-expand-md bg-secondary navbar-dark">
     <div class="container">
@@ -39,7 +43,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form action="<?php echo base_url() ?>compiler/compile" method="POST" id="form" name="f2">
+          <form action="<?php echo base_url() ?>compiler/execute" method="POST" id="form" name="f2">
             <div class="form-group">
               <label>Write your code here</label>
               <textarea class="form-control" name="code" rows="10" style="font-family: monospace">public class Main { public static void main(String[] args){ System.out.println("Hello World"); } } </textarea>
@@ -48,37 +52,12 @@
               <label>Input (if needed)</label>
               <textarea class="form-control" name="input" rows="10" style="font-family: monospace"></textarea>
             </div>
-            <button type="submit" id="st" class="btn btn-success">Run Code</button>
+            <input type="submit" id="st" class="btn btn-success" value="Run Code"></input>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div class="py-2">
-    <div class="container">
-      <div class="row">
-      	<div class="col-md-12">
-          <div class="form-group">
-            <label>Output</label>
-            <textarea id="div" class="form-control" rows="10" readonly="readonly" style="font-family: monospace"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bg-dark text-white">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 mt-3">
-          <p class="text-center text-white">Beta Version 2018 - developed by Yohanes Dwi Listio
-            <br>Design by © Copyright 2018 Pingendo - All rights reserved. </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="<?php echo base_url() ?>assets/jquery-3.2.1.slim.min.js"></script>
-  <script src="<?php echo base_url() ?>assets/popper.min.js"></script>
-  <script src="<?php echo base_url() ?>assets/bootstrap.min.js"></script>
   <script type="text/javascript"> 
   $(document).ready(function(){
      $("#st").click(function(){
@@ -97,18 +76,41 @@
       $.ajax({
             type: "POST", //type of submit
             cache: false, //important or else you might get wrong data returned to you
-            url: "<?php echo base_url() ?>compiler/compile", //destination
+            url: "<?php echo base_url() ?>compiler/execute", //destination
             datatype: "html", //expected data format from process.php
-            data: $('form').serialize(), //target your form's data and serialize for a POST
+            data: ($('form').serialize()).replace(/%20/g, "+"), //target your form's data and serialize for a POST
             success: function(result) { // data is the var which holds the output of your process.php
                 // locate the div with #result and fill it with returned data from process.php
                 $('#div').html(result);
-                alert(result);
             }
         });
     });
   });
   </script>
+  <div class="py-2">
+    <div class="container">
+      <div class="row">
+      	<div class="col-md-12">
+          <div class="form-group">
+            <label>Output</label>
+            <textarea id="div" class="form-control" rows="10" readonly="readonly" style="font-family: monospace"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-dark text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mt-3">
+          <p class="text-center text-white">
+          	Beta Version 2018 - developed by Yohanes Dwi Listio
+            <br>Design by © Copyright 2018 Pingendo - All rights reserved. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </body>
 
 </html>
