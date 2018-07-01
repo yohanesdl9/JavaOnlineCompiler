@@ -82,7 +82,7 @@
   <script type="text/javascript"> 
   $(document).ready(function(){
      $("#st").click(function(){
-        $("#div").html("Loading ......");
+        $("#div").html("Loading ...");
      });
   });
   </script>
@@ -103,6 +103,7 @@
             success: function(result) { // data is the var which holds the output of your process.php
                 // locate the div with #result and fill it with returned data from process.php
                 $('#div').html(result);
+                alert(result);
             }
         });
     });
