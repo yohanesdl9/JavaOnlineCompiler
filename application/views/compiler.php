@@ -10,7 +10,7 @@
   <script src="<?php echo base_url() ?>assets/popper.min.js"></script>
   <script src="<?php echo base_url() ?>assets/bootstrap.min.js"></script>
 </head>
-<body>
+<body onload="startTime()">
   <nav class="navbar navbar-expand-md bg-secondary navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="#">Java Online Compiler</a>
@@ -33,7 +33,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="display-1">Java Online Compiler</h1>
+          <h1 class="display-5">Java Online Compiler</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p id="server"></p>
         </div>
       </div>
     </div>
@@ -57,6 +66,28 @@
       </div>
     </div>
   </div>
+  <script>
+	function startTime() {
+	    var today = new Date();
+	    var date = today.getDate();
+	    var month = today.getMonth();
+	    var year = today.getFullYear();
+	    var h = today.getHours();
+	    var m = today.getMinutes();
+	    var s = today.getSeconds();
+	    date = checkTime(date);
+	    month = checkTime(month);
+	    m = checkTime(m);
+	    s = checkTime(s);
+	    document.getElementById('server').innerHTML = "Server Time : " + 
+	    date + "-" + month + "-" + year + " " + h + ":" + m + ":" + s;
+	    var t = setTimeout(startTime, 500);
+	}
+	function checkTime(i) {
+	    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+	    return i;
+	}
+  </script>
   <script type="text/javascript"> 
   $(document).ready(function(){
      $("#st").click(function(){
